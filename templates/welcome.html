@@ -3,15 +3,24 @@
     h1 {
       outline: 2px double #1C6EA4;
       outline-offset: 0px;
-      background-color: #E6FFFF;
+      background-color: aliceblue;
       }
-    body {background-color: aliceblue;}
+    
+    body {background-color: whitesmoke;}
+    
+    .main {
+        font-size: 28px; /* Increased text to enable scrolling */
+        padding: 0px 10px;
+    }
   </style>
+  
   <body>
-    <h1 style="text-align: center;">Moravian College<br>3D Printing</h1>
-    <p>Please be aware that the 3D Printing club may only accept requests from Moravian emails.<br> Login with a Moravian email to proceed.</p>
-    <form action = "/login">  
-      <p><input type = 'submit' value = ' Login ' style="background-color: 1C6EA4; color: aliceblue; font-size: large;"/></p>
-    </form>
+    <div class='main'>
+      <h1 style="text-align: center;">Moravian College<br>3D Printing</h1>
+      <p>Please be aware that the 3D Printing club may only accept requests from Moravian emails.<br> Login with a Moravian email to proceed.</p>
+      <form action = "/login">  
+        <p><input type = 'submit' value = ' Login ' style="background-color: 1C6EA4; color: aliceblue; font-size: large;"/></p>
+      </form>
+    </div>
   </body>
 </html>

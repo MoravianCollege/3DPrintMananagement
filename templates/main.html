@@ -3,15 +3,58 @@
     h1 {
       outline: 2px double #1C6EA4;
       outline-offset: 0px;
-      background-color: #E6FFFF;
-      }
-    body {background-color: aliceblue;}
+      background-color: aliceblue;
+    }
+    
+    body {background-color: whitesmoke;}
+
+    .sidenav {
+        height: 100%;
+        width: 160px;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: #1C6EA4;
+        overflow-x: hidden;
+        padding-top: 20px;
+    }
+
+    .sidenav a {
+        padding: 8px 10px 8px 20px;
+        text-decoration: none;
+        font-size: 20px;
+        color: rgb(197, 224, 247);
+        display: block;
+    }
+
+    .sidenav a:hover {
+        color: white;
+    }
+
+    .main {
+        margin-left: 160px; /* Same as the width of the sidenav */
+        font-size: 28px; /* Increased text to enable scrolling */
+        padding: 0px 10px;
+    }
+
   </style>
+
+
   <body>
-        <h1 style="text-align: center;">Moravian College<br>3D Printing</h1>
-        <p>hello {{ name }}<br>lets practice logging out!</p>
-        <form action='/logout'>
-            <p><input type="submit" value = ' Logout ' style="background-color: 1C6EA4; color: aliceblue; font-size: large;"></p>
-        </form>
+        <div class="sidenav">
+            <a href="#about">Request Form</a>
+            <a href="#services">Print Status</a>
+            <a href="#clients">Print Queue</a>
+            <a href="#contact">Members</a>
+            <a href="#contact">Logout</a>
+        </div>
+        <div class="main">
+            <h1 style="text-align: center;">Moravian College<br>3D Printing</h1>
+            <p>hello {{ name }}<br>lets practice logging out!</p>
+            <form action='/logout'>
+                <p><input type="submit" value = ' Logout ' style="background-color: 1C6EA4; color: aliceblue; font-size: large;"></p>
+            </form>
+        </div>  
     </body>
 </html>
