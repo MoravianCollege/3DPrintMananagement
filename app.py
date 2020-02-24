@@ -60,14 +60,18 @@ def load_user(user_id):
 @app.route("/")
 def index():
     if current_user.is_authenticated:
-        return (
-            "<p>Hello, {}! You're logged in! Email: {}</p>"
-            "<div><p>Google Profile Picture:</p>"
-            '<img src="{}" alt="Google profile pic"></img></div>'
-            '<a class="button" href="/logout">Logout</a>'.format(
-                current_user.name, current_user.email, current_user.profile_pic
-            )
+        return render_template('main.html', name = current_user.name)
+        '''
+        (
+        "<p>Hello, {}! You're logged in! Email: {}</p>"
+        "<div><p>Google Profile Picture:</p>"
+        '<img src="{}" alt="Google profile pic"></img></div>'
+        '<a class="button" href="/logout">Logout</a>'.format(
+            current_user.name, current_user.email, current_user.profile_pic
         )
+        
+        )
+        '''
     else:
         return render_template('welcome.html')
         #return '<a class="button" href="/login">Google Login</a>'
@@ -156,6 +160,30 @@ def callback():
 def logout():
     logout_user()
     return redirect(url_for("index"))
+
+
+@app.route("/form")
+@login_required
+def req_form():
+    return redirect(url_for("index"))
+
+
+@app.route("/status")
+@login_required
+def req_status():
+    return render_template('main.html')
+
+
+@app.route("/queue")
+@login_required
+def queue():
+    return render_template('main.html')
+
+
+@app.route("/members")
+@login_required
+def members():
+    return render_template('main.html')
 
 
 def get_google_provider_cfg():
