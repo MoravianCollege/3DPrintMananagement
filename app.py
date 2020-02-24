@@ -162,6 +162,30 @@ def logout():
     return redirect(url_for("index"))
 
 
+@app.route("/form")
+@login_required
+def req_form():
+    return redirect(url_for("index"))
+
+
+@app.route("/status")
+@login_required
+def req_status():
+    return render_template('main.html')
+
+
+@app.route("/queue")
+@login_required
+def queue():
+    return render_template('main.html')
+
+
+@app.route("/members")
+@login_required
+def members():
+    return render_template('main.html')
+
+
 def get_google_provider_cfg():
     return requests.get(GOOGLE_DISCOVERY_URL).json()
 
