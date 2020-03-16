@@ -191,4 +191,8 @@ def get_google_provider_cfg():
 
 
 if __name__ == "__main__":
-    app.run(ssl_context="adhoc")
+    # Run HTTPS
+    #app.run(ssl_context="adhoc")
+    
+    # Run HTTP
+    app.run()
