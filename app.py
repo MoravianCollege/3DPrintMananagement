@@ -60,7 +60,7 @@ def load_user(user_id):
 @app.route("/")
 def index():
     if current_user.is_authenticated:
-        return render_template('main.html', name = current_user.name)
+        return render_template('form.html', name = current_user.name)
         '''
         (
         "<p>Hello, {}! You're logged in! Email: {}</p>"
@@ -171,19 +171,25 @@ def req_form():
 @app.route("/status")
 @login_required
 def req_status():
-    return render_template('main.html')
+    return render_template('status.html')
 
 
 @app.route("/queue")
 @login_required
 def queue():
-    return render_template('main.html')
+    return render_template('queue.html')
 
 
 @app.route("/members")
 @login_required
 def members():
-    return render_template('main.html')
+    return render_template('members.html')
+
+
+@app.route("/success", methods=["POST"])
+@login_required
+def success():
+    return render_template('success.html')
 
 
 def get_google_provider_cfg():
@@ -191,4 +197,5 @@ def get_google_provider_cfg():
 
 
 if __name__ == "__main__":
+    # Run HTTPS
     app.run(ssl_context="adhoc")

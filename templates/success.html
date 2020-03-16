@@ -1,0 +1,57 @@
+<html>
+  <style>
+    h1 {
+      outline: 2px double #1C6EA4;
+      outline-offset: 0px;
+      background-color: aliceblue;
+    }
+    
+    body {background-color: whitesmoke;}
+
+    .sidenav {
+        height: 100%;
+        width: 160px;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: #1C6EA4;
+        overflow-x: hidden;
+        padding-top: 20px;
+    }
+
+    .sidenav a {
+        padding: 8px 10px 8px 20px;
+        text-decoration: none;
+        font-size: 20px;
+        color: rgb(197, 224, 247);
+        display: block;
+    }
+
+    .sidenav a:hover {
+        color: white;
+    }
+
+    .main {
+        margin-left: 160px; /* Same as the width of the sidenav */
+        font-size: 24px;
+        padding: 0px 10px;
+    }
+
+  </style>
+
+
+  <body>
+        <div class="sidenav">
+            <a href="/form">Request Form</a>
+            <a href="/status">Printer Status</a>
+            <a href="/queue">Print Queue</a>
+            <a href="/members">Members</a>
+            <a href="/logout">Logout</a>
+        </div>
+        <div class="main">
+            <h1 style="text-align: center;">Moravian College<br>3D Printing</h1>
+            <p>Your request has been recorded<br>Thank you for your submission!</p>
+        </div>  
+    </body>
+</html>
