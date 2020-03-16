@@ -186,6 +186,12 @@ def members():
     return render_template('members.html')
 
 
+@app.route("/success", methods=["POST"])
+@login_required
+def success():
+    return render_template('success.html')
+
+
 def get_google_provider_cfg():
     return requests.get(GOOGLE_DISCOVERY_URL).json()
 
