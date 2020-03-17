@@ -18,7 +18,7 @@ import requests
 # Internal imports
 from db import init_db_command
 from user import User
-from ultimaker import Ultimaker, PrinterStatus, Printer
+from ultimaker import Ultimaker, PrintJob, PrintJobState, PrintJobResult
 
 # Configuration
 GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
