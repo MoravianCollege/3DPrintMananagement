@@ -38,6 +38,14 @@
         padding: 0px 10px;
     }
 
+    sub {
+        font-size: 18px;
+    }
+
+    warning {
+        font-size: 12px;
+    }
+
   </style>
 
 
@@ -53,9 +61,22 @@
             <h1 style="text-align: center;">Moravian College<br>3D Printing</h1>
             <p style="text-align: center;">Request Form</p>
             <form action='/success' method = "POST">
-                <p>Print Link <input type = "text" name = "link"/></p>
+                <p>Print Link<br>
+                    <sub style="font-size: 18;">Use a link from 
+                        <a href>https://www.thingiverse.com/</a>
+                        <br><input type = "text" name = "link"/>
+                    </sub>
+                </p>
+
                 <p>
-                    <label for="color1">Select Colors</label>
+                    <label for="duedate">Needed by<br>
+                        <sub>If no specific date, leave blank<br></sub>
+                        <warning>Note: We will try our best to finish before this date but there is no guarantee<br></warning>
+                    </label>
+                    <input type="date" id="duedate"> 
+                </p>
+                <p>
+                    <label for="color1">Select Colors<br></label>
                     <select id="color1">
                         <option value="Black">Black</option>
                         <option value="Blue">Blue</option>
@@ -94,11 +115,15 @@
                     </select>
                 </p>
                 <p>
-                    <label for="material">Select Material</label>
+                    <label for="material">Select Material<br></label>
                     <select id="material">
                         <option value="PLA">PLA (general purpose biodegradable plastic)</option>
                         <option value="ABS">ABS (stronger than PLA and less prone to melting)</option>
                     </select>
+                </p>
+                <p>
+                    <label for="detail">Enter addition detail and information about your print<br></label>
+                    <textarea id="detail" rows="5" cols="60"></textarea>
                 </p>
                 <p><input type="submit" value = ' Submit ' style="background-color: 1C6EA4; color: aliceblue; font-size: large;"></p>
             </form>
