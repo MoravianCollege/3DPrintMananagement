@@ -218,17 +218,22 @@ def request_has_printjob(results):
     if results.get("link") == '':
         # Check if has file
         if results.get("files") == '':
-            # No print was given
+            # Does not have either field
             return False
         # Check the file type
-        if check_file_type_not_allowed(results.get("files")):
+        if is_file_type_not_allowed(results.get("files")):
             # File is neither an stl or zip file
             return False
+    # Check if link is to thingiverse
+    elif not is_link_to_thingiverse(results.get("link")):
+        return False
 
+    # Has one correct field at least
     return True
 
 
-def check_file_type_not_allowed(file_name):
+
+def is_file_type_not_allowed(file_name):
     # If the file is not a stl file
     if ".stl" not in file_name:
         # If the file is not a zip file
@@ -237,6 +242,16 @@ def check_file_type_not_allowed(file_name):
     
     # The file is either an stl or a zip
     return False
+
+
+
+def is_link_to_thingiverse(link):
+    # If the link does not go to a thingiverse thing
+    if "www.thingiverse.com/thing:" not in link:
+        return False
+
+    # The link is a thingiverse thing
+    return True
 
 if __name__ == "__main__":
     # Run HTTPS
