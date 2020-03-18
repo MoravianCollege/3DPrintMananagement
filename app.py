@@ -192,9 +192,12 @@ def members():
 @app.route("/success", methods=["POST"])
 @login_required
 def success():
+    
+    if(True):
+        return redirect(url_for("failure"))
     return render_template('success.html')
 
-@app.route("/error", methods=["POST"])
+@app.route("/error-no-print-attached")
 @login_required
 def failure():
     return render_template('failure.html')
