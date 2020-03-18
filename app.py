@@ -164,15 +164,28 @@ def printer_status():
     # Xerox request state
     try:
         Xerox = PrintJob(Ultimaker("172.31.228.191", None, None))
-        print(Xerox.state)
+        Xerox_status = Xerox.state
     except Exception as e:
-        print("Xerox failure:\n" + str(e))
+        # If Printer is not doing a job
+        if str(e) == 'Not found':
+            Xerox_status = PrintJobState.NO_JOB 
+        # Printer is off, UNKNOWN = OFF
+        else:
+            Xerox_status = PrintJobState.UNKNOWN
+    
     # Gutenberg request state
     try:
         Gutenberg = PrintJob(Ultimaker("172.31.228.190", None, None))
-        print(Gutenberg.state)
+        Gutenberg_status = Gutenberg.state
     except Exception as e:
-        print("Gutenberg failure:\n" + str(e))
+        # If Printer is not doing a job
+        if str(e) == 'Not found':
+            Gutenberg_status = PrintJobState.NO_JOB 
+        # Printer is off, UNKNOWN = OFF
+        else:
+            Gutenberg_status = PrintJobState.UNKNOWN
+
+    Xerox_Gutenberg_status_str = get_status_string(Xerox_status, Gutenberg_status)
 
     return render_template('status.html')
 
@@ -201,6 +214,7 @@ def success():
 
     # Print was given
     return render_template('success.html')
+
 
 @app.route("/error-no-print-attached")
 @login_required
@@ -236,6 +250,11 @@ def check_file_type_not_allowed(file_name):
     
     # The file is either an stl or a zip
     return False
+
+
+def get_status_string(Xerox, Gutenberg):
+    pass
+
 
 if __name__ == "__main__":
     # Run HTTPS
