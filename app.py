@@ -192,8 +192,8 @@ def members():
 @app.route("/success", methods=["POST"])
 @login_required
 def success():
-    
-    if(True):
+    results = request.form
+    if(results.get("link") == '' and results.get("files") == ''):
         return redirect(url_for("failure"))
     return render_template('success.html')
 
