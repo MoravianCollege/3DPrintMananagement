@@ -253,8 +253,32 @@ def check_file_type_not_allowed(file_name):
 
 
 def get_status_string(Xerox, Gutenberg):
-    pass
+    Xerox_status = get_status_message(Xerox)
+    Gutenberg_status = get_status_message(Gutenberg)
+    return (Xerox_status, Gutenberg_status)
 
+
+def get_status_message(status):
+    if status == PrintJobState.NO_JOB:
+        return "The Printer is not currently working on a print"
+    elif status == PrintJobState.PRINTING:
+        return "The Printer is currently working on a print"
+    elif status == PrintJobState.PAUSING:
+        return "The Printer is pausing the print"
+    elif status == PrintJobState.PAUSED:
+        return "The Printer is currently paused"
+    elif status == PrintJobState.RESUMING:
+        return "The Printer is resuming"
+    elif status == PrintJobState.PRE_PRINT:
+        return "The Printer is currently getting ready to start a print"
+    elif status == PrintJobState.POST_PRINT:
+        return "The Printer is finished with a print"
+    elif status == PrintJobState.WAIT_CLEANUP:
+        return "The Printer is waiting for a member to clean up a finished print"
+    elif status == PrintJobState.WAIT_USER_ACTION:
+        return "The Printer is waiting for a member to reset it"
+    else:
+        return "The Printer is currently turned off"
 
 if __name__ == "__main__":
     # Run HTTPS
