@@ -195,15 +195,9 @@ def success():
     # Get results from request form
     results = request.form
     
-    # Check if has link
-    if results.get("link") == '':
-        # Check if has file
-        if results.get("files") == '':
-            # No print was given
-            return redirect(url_for("failure"))
-        # Check the file type
-        if check_file_type_not_allowed(results.get("files")):
-            return redirect(url_for("failure"))
+    # Check if the user actually included a print
+    if not request_has_printjob(results):   
+        return redirect(url_for("failure"))
 
     # Print was given
     return render_template('success.html')
@@ -216,6 +210,21 @@ def failure():
 
 def get_google_provider_cfg():
     return requests.get(GOOGLE_DISCOVERY_URL).json()
+
+
+def request_has_printjob(results):
+    # Check if has link
+    if results.get("link") == '':
+        # Check if has file
+        if results.get("files") == '':
+            # No print was given
+            return False
+        # Check the file type
+        if check_file_type_not_allowed(results.get("files")):
+            # File is neither an stl or zip file
+            return False
+
+    return True
 
 
 def check_file_type_not_allowed(file_name):
