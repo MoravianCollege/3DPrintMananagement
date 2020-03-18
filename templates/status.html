@@ -10,7 +10,7 @@
 
     .sidenav {
         height: 100%;
-        width: 160px;
+        width: 12%;
         position: fixed;
         z-index: 1;
         top: 0;
@@ -33,11 +33,36 @@
     }
 
     .main {
-        margin-left: 160px; /* Same as the width of the sidenav */
+        margin-left: 12%; /* Same as the width of the sidenav */
         font-size: 24px;
         padding: 0px 10px;
     }
 
+    .leftside, .rightside {
+        margin-left: 12%;
+        height: 100%;
+        width: 100%;
+    }
+
+    .leftside{
+        background: red;
+    }
+
+    .rightside{
+        background: black;
+    }
+
+    .column {
+    float: left;
+    width: 48%;
+    }
+
+    
+    .row:after {
+    content: "";
+    display: table;
+    clear: both;
+    }
   </style>
 
 
@@ -56,5 +81,14 @@
                 <p><input type="submit" value = ' Logout ' style="background-color: 1C6EA4; color: aliceblue; font-size: large;"></p>
             </form>
         </div>  
+
+        <div class="row">
+            <div class="column">
+                <div class="leftside"></div>
+            </div>
+            <div class="column">
+                <div class="rightside"></div>
+            </div>
+          </div>
     </body>
 </html>
