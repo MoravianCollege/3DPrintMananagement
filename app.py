@@ -202,6 +202,7 @@ def success():
     # Print was given
     return render_template('success.html')
 
+
 @app.route("/error-no-print-attached")
 @login_required
 def failure():
