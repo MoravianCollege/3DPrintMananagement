@@ -39,29 +39,32 @@
     }
 
     .leftside, .rightside {
-        margin-left: 12%;
         height: 100%;
         width: 100%;
     }
 
     .leftside{
         background: red;
+        font-size: 24px;
+        color:blanchedalmond;
     }
 
     .rightside{
         background: black;
+        font-size: 24px;
+        color: blanchedalmond;
     }
 
     .column {
-    float: left;
-    width: 48%;
+        float: left;
+        width: 44%;
     }
 
     
     .row:after {
-    content: "";
-    display: table;
-    clear: both;
+        content: "";
+        display: table;
+        clear: both;
     }
   </style>
 
@@ -76,18 +79,19 @@
         </div>
         <div class="main">
             <h1 style="text-align: center;">Moravian College<br>3D Printing</h1>
-            <p>hello {{ name }}<br>lets practice logging out!</p>
-            <form action='/logout'>
-                <p><input type="submit" value = ' Logout ' style="background-color: 1C6EA4; color: aliceblue; font-size: large;"></p>
-            </form>
         </div>  
-
         <div class="row">
-            <div class="column">
-                <div class="leftside"></div>
-            </div>
-            <div class="column">
-                <div class="rightside"></div>
+            <div class="column" style="margin-left: 12%; width: 100%;">
+                <div class="column">
+                    <div class="leftside">
+                        Xerox
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="rightside">
+                        Gutenberg
+                    </div>
+                </div>
             </div>
           </div>
     </body>
