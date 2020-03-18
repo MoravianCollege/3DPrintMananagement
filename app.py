@@ -192,9 +192,17 @@ def members():
 @app.route("/success", methods=["POST"])
 @login_required
 def success():
+    # Get results from request form
+    results = request.form
+    
+    # Check if the user actually included a print
+    if not request_has_printjob(results):   
+        return redirect(url_for("failure"))
+
+    # Print was given
     return render_template('success.html')
 
-@app.route("/error", methods=["POST"])
+@app.route("/error-no-print-attached")
 @login_required
 def failure():
     return render_template('failure.html')
@@ -203,6 +211,31 @@ def failure():
 def get_google_provider_cfg():
     return requests.get(GOOGLE_DISCOVERY_URL).json()
 
+
+def request_has_printjob(results):
+    # Check if has link
+    if results.get("link") == '':
+        # Check if has file
+        if results.get("files") == '':
+            # No print was given
+            return False
+        # Check the file type
+        if check_file_type_not_allowed(results.get("files")):
+            # File is neither an stl or zip file
+            return False
+
+    return True
+
+
+def check_file_type_not_allowed(file_name):
+    # If the file is not a stl file
+    if ".stl" not in file_name:
+        # If the file is not a zip file
+        if ".zip" not in file_name:
+            return True
+    
+    # The file is either an stl or a zip
+    return False
 
 if __name__ == "__main__":
     # Run HTTPS
