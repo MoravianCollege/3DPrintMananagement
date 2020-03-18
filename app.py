@@ -159,7 +159,21 @@ def req_form():
 
 @app.route("/status")
 @login_required
-def req_status():
+def printer_status():
+    print("STATUS")
+    # Xerox request state
+    try:
+        Xerox = PrintJob(Ultimaker("172.31.228.191", None, None))
+        print(Xerox.state)
+    except Exception as e:
+        print("Xerox failure:\n" + str(e))
+    # Gutenberg request state
+    try:
+        Gutenberg = PrintJob(Ultimaker("172.31.228.190", None, None))
+        print(Gutenberg.state)
+    except Exception as e:
+        print("Gutenberg failure:\n" + str(e))
+
     return render_template('status.html')
 
 
@@ -179,6 +193,11 @@ def members():
 @login_required
 def success():
     return render_template('success.html')
+
+@app.route("/error", methods=["POST"])
+@login_required
+def failure():
+    return render_template('failure.html')
 
 
 def get_google_provider_cfg():
