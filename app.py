@@ -160,7 +160,6 @@ def req_form():
 @app.route("/status")
 @login_required
 def printer_status():
-    print("STATUS")
     # Xerox request state
     try:
         Xerox = PrintJob(Ultimaker("172.31.228.191", None, None))
@@ -174,6 +173,7 @@ def printer_status():
             Xerox_status = PrintJobState.UNKNOWN
     
     # Gutenberg request state
+    
     try:
         Gutenberg = PrintJob(Ultimaker("172.31.228.190", None, None))
         Gutenberg_status = Gutenberg.state
@@ -184,10 +184,16 @@ def printer_status():
         # Printer is off, UNKNOWN = OFF
         else:
             Gutenberg_status = PrintJobState.UNKNOWN
-
+ 
     Xerox_Gutenberg_status_str = get_status_string(Xerox_status, Gutenberg_status)
 
-    return render_template('status.html')
+    return render_template('status.html',
+                           X_status=Xerox_Gutenberg_status_str[0],
+                           G_status=Xerox_Gutenberg_status_str[1],
+                           X_name="name X",
+                           G_name="name G",
+                           X_finish="never",
+                           G_finish="08:22:53")
 
 
 @app.route("/queue")
