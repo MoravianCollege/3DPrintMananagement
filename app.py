@@ -164,36 +164,55 @@ def printer_status():
     try:
         Xerox = PrintJob(Ultimaker("172.31.228.191", None, None))
         Xerox_status = Xerox.state
+        Xerox_name = Xerox.name
+        print(Xerox_name)
+        Xerox_finish = get_remaining_time(Xerox)
+        print(Xerox_finish)
+       
     except Exception as e:
+        
         # If Printer is not doing a job
         if str(e) == 'Not found':
             Xerox_status = PrintJobState.NO_JOB 
+        
         # Printer is off, UNKNOWN = OFF
         else:
             Xerox_status = PrintJobState.UNKNOWN
-    
+
+        Xerox_name = ""
+        Xerox_finish = ""
+            
     # Gutenberg request state
-    
     try:
         Gutenberg = PrintJob(Ultimaker("172.31.228.190", None, None))
         Gutenberg_status = Gutenberg.state
+        Gutenberg_name = Gutenberg.name
+        print(Gutenberg_name)
+        Gutenberg_finish = get_remaining_time(Gutenberg)
+        print(Gutenberg_finish)
+       
     except Exception as e:
+        
         # If Printer is not doing a job
         if str(e) == 'Not found':
-            Gutenberg_status = PrintJobState.NO_JOB 
+            Gutenberg_status = PrintJobState.NO_JOB
+
         # Printer is off, UNKNOWN = OFF
         else:
             Gutenberg_status = PrintJobState.UNKNOWN
+        
+        Gutenberg_name = ""
+        Gutenberg_finish = ""
  
-    Xerox_Gutenberg_status_str = get_status_string(Xerox_status, Gutenberg_status)
-
+    Xerox_status, Gutenberg_status = get_status_string(Xerox_status, Gutenberg_status)
+    
     return render_template('status.html',
-                           X_status=Xerox_Gutenberg_status_str[0],
-                           G_status=Xerox_Gutenberg_status_str[1],
-                           X_name="name X",
-                           G_name="name G",
-                           X_finish="never",
-                           G_finish="08:22:53")
+                           X_status=Xerox_status,
+                           G_status=Gutenberg_status,
+                           X_name=Xerox_name,
+                           G_name=Gutenberg_name,
+                           X_finish=Xerox_finish,
+                           G_finish=Gutenberg_finish)
 
 
 @app.route("/queue")
@@ -285,6 +304,11 @@ def get_status_message(status):
         return "The Printer is waiting for a member to reset it"
     else:
         return "The Printer is currently turned off"
+
+
+def get_remaining_time(print_job):
+    return ("Remaining time for print: " +
+            str(print_job.time_total - print_job.time_elapsed))
 
 if __name__ == "__main__":
     # Run HTTPS
