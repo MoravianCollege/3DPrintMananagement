@@ -1,46 +1,5 @@
 <html>
-  <style>
-    h1 {
-      outline: 2px double #1C6EA4;
-      outline-offset: 0px;
-      background-color: aliceblue;
-    }
-    
-    body {background-color: whitesmoke;}
-
-    .sidenav {
-        height: 100%;
-        width: 12%;
-        position: fixed;
-        z-index: 1;
-        top: 0;
-        left: 0;
-        background-color: #1C6EA4;
-        overflow-x: hidden;
-        padding-top: 20px;
-    }
-
-    .sidenav a {
-        padding: 8px 10px 8px 20px;
-        text-decoration: none;
-        font-size: 20px;
-        color: rgb(197, 224, 247);
-        display: block;
-    }
-
-    .sidenav a:hover {
-        color: white;
-    }
-
-    .main {
-        margin-left: 12%; /* Same as the width of the sidenav */
-        font-size: 24px;
-        padding: 0px 10px;
-    }
-
-  </style>
-
-
+  <link rel="stylesheet" type="text/css" href="static/base.css"/>
   <body>
         <div class="sidenav">
             <a href="/form">Request Form</a>
@@ -51,7 +10,7 @@
         </div>
         <div class="main">
             <h1 style="text-align: center;">Moravian College<br>3D Printing</h1>
-            <p>There was an error recording your request<br>Make sure you including either a link or a file before submitting<br></p>
+            <p>There was an error recording your request<br>Before submitting make sure you including either:<br> - A link to a thingiverse thing<br> - A zip or an stl file<br></p>
             <form action='/form'>
                 <p><input type="submit" value = ' OK ' style="background-color: 1C6EA4; color: aliceblue; font-size: large;"></p>
             </form>
