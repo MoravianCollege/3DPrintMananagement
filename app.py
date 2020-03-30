@@ -165,9 +165,7 @@ def printer_status():
         Xerox = PrintJob(Ultimaker("172.31.228.191", None, None))
         Xerox_status = Xerox.state
         Xerox_name = Xerox.name
-        print(Xerox_name)
         Xerox_finish = get_remaining_time(Xerox)
-        print(Xerox_finish)
        
     except Exception as e:
         
@@ -187,9 +185,8 @@ def printer_status():
         Gutenberg = PrintJob(Ultimaker("172.31.228.190", None, None))
         Gutenberg_status = Gutenberg.state
         Gutenberg_name = Gutenberg.name
-        print(Gutenberg_name)
         Gutenberg_finish = get_remaining_time(Gutenberg)
-        print(Gutenberg_finish)
+        
        
     except Exception as e:
         
