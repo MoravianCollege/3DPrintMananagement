@@ -1,0 +1,75 @@
+
+h1 {
+    outline: 2px double #1C6EA4;
+    outline-offset: 0px;
+    background-color: aliceblue;
+}
+
+body {background-color: whitesmoke;}
+
+.sidenav {
+    height: 100%;
+    width: 12%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #1C6EA4;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.sidenav a {
+    padding: 8px 10px 8px 20px;
+    text-decoration: none;
+    font-size: 20px;
+    color: rgb(197, 224, 247);
+    display: block;
+}
+
+.sidenav a:hover {
+    color: white;
+}
+
+.main {
+    margin-left: 12%; /* Same as the width of the sidenav */
+    font-size: 24px;
+    padding: 0px 10px;
+}
+
+.leftside, .rightside {
+    height: 100%;
+    width: 100%;
+}
+
+.leftside{
+    background: red;
+    font-size: 24px;
+    color:blanchedalmond;
+}
+
+.rightside{
+    background: black;
+    font-size: 24px;
+    color: blanchedalmond;
+}
+
+.column {
+    float: left;
+    width: 44%;
+}
+
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+sub {
+    font-size: 18px;
+}
+
+warning {
+    font-size: 12px;
+}
