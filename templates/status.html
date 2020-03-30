@@ -85,12 +85,46 @@
             <div class="column" style="margin-left: 12%; width: 100%;">
                 <div class="column">
                     <div class="leftside">
-                        Xerox
+                        <p> Xerox<br></p>
+                        <p style="text-align: center;">
+                            {{ X_status }}<br>
+                            {{ X_name }}<br>
+                            {{ X_finish }}
+                        </p>
+                        <div style="text-align: center;">
+                            <button onclick="pauseXerox()" id="pauseX">Pause</button>
+                            <script>
+                                function pauseXerox() {
+                                    var x = document.getElementById("pauseX");
+                                    if(x.innerText == "Pause")
+                                        x.innerText = "Resume"
+                                    else
+                                        x.innerText = "Pause"
+                                }
+                            </script>
+                        </div>
                     </div>
                 </div>
                 <div class="column">
                     <div class="rightside">
-                        Gutenberg
+                        <p> Gutenberg<br></p>
+                        <p style="text-align: center;">
+                            {{ G_status }}<br>
+                            {{ G_name }}<br>
+                            {{ G_finish }}
+                        </p>
+                        <div style="text-align: center;">
+                            <button onclick="pauseGutenberg()" id="pauseG">Pause</button>
+                            <script>
+                                function pauseGutenberg() {
+                                    var x = document.getElementById("pauseG");
+                                    if(x.innerText == "Pause")
+                                        x.innerText = "Resume"
+                                    else
+                                        x.innerText = "Pause"
+                                }
+                            </script>
+                        </div>
                     </div>
                 </div>
             </div>
