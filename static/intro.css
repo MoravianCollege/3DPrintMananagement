@@ -1,13 +1,11 @@
 
-    h1 {
-      outline: 2px double #1C6EA4;
-      outline-offset: 0px;
-      background-color: aliceblue;
-      }
-    
-    body {background-color: whitesmoke;}
-    
-    .main {
-        font-size: 24px; /* Increased text to enable scrolling */
-        padding: 0px 10px;
-    }
+h1 {
+  outline: 2px double #1C6EA4;
+  outline-offset: 0px;
+  background-color: aliceblue;
+  }
+
+.main {
+    font-size: 24px; /* Increased text to enable scrolling */
+    padding: 0px 10px;
+}

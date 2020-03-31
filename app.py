@@ -61,7 +61,7 @@ def load_user(user_id):
 @app.route("/")
 def index():
     if current_user.is_authenticated:
-        return render_template('form.html', name = current_user.name)
+        return render_template('form.html')
     else:
         return render_template('welcome.html')
 
