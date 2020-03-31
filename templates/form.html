@@ -1,0 +1,91 @@
+<html>
+  <link rel="stylesheet" type="text/css" href="static/base.css"/>
+  <body>
+        <div class="sidenav">
+            <a href="/form">Request Form</a>
+            <a href="/status">Printer Status</a>
+            <a href="/queue">Print Queue</a>
+            <a href="/members">Members</a>
+            <a href="/logout">Logout</a>
+        </div>
+        <div class="main">
+            <h1 style="text-align: center;">Moravian College<br>3D Printing</h1>
+            <p style="text-align: center;">Request Form</p>
+            <form action='/success' method = "POST">
+                <p style="margin-bottom: 0;">Send us your print:</p>
+                <p style="outline: 2px double grey;outline-offset: 5px; margin-top: 5px;">
+                    Print Link<br>
+                    <sub style="font-size: 18;">Use a link from 
+                        <a href>https://www.thingiverse.com/</a>
+                        <br><input type = "text" name = "link"/>
+                    </sub>
+                    <br><br>OR<br><br>
+                    Upload Files<br>
+                        <sub>Make sure the file is an STL file or a zip file containing multiple STL files<br></sub>
+                        <input type = "file" name = "files"/>
+                    </p>
+                </p>
+                <p>
+                    <label for="duedate">Needed by<br>
+                        <sub>If no specific date, leave blank<br></sub>
+                        <warning>Note: We will try our best to finish before this date but there is no guarantee<br></warning>
+                    </label>
+                    <input type="date" id="duedate"> 
+                </p>
+                <p>
+                    <label for="color1">Select Colors<br>
+                        <sub>You can select up to 2 colors<br></sub>
+                    </label>
+                    <select id="color1">
+                        <option value="Black">Black</option>
+                        <option value="Blue">Blue</option>
+                        <option value="Brown">Brown</option>
+                        <option value="FTRed">Fire Truck Red</option>
+                        <option value="Gold">Gold</option>
+                        <option value="Green">Green</option>
+                        <option value="Grey">Grey</option>
+                        <option value="LBlue">LightBlue</option>
+                        <option value="LPink">Light Pink</option>
+                        <option value="Orange">Orange</option>
+                        <option value="Pink">Pink</option>
+                        <option value="Red">Red</option>
+                        <option value="Silver">Silver</option>
+                        <option value="White">White</option>
+                        <option value="Yellow">Yellow</option>
+                    </select>
+                    <label for="color2"></label>
+                    <select id="color2">
+                        <option value="None">None</option>
+                        <option value="Black">Black</option>
+                        <option value="Blue">Blue</option>
+                        <option value="Brown">Brown</option>
+                        <option value="FTRed">Fire Truck Red</option>
+                        <option value="Gold">Gold</option>
+                        <option value="Green">Green</option>
+                        <option value="Grey">Grey</option>
+                        <option value="LBlue">LightBlue</option>
+                        <option value="LPink">Light Pink</option>
+                        <option value="Orange">Orange</option>
+                        <option value="Pink">Pink</option>
+                        <option value="Red">Red</option>
+                        <option value="Silver">Silver</option>
+                        <option value="White">White</option>
+                        <option value="Yellow">Yellow</option>
+                    </select>
+                </p>
+                <p>
+                    <label for="material">Select Material<br></label>
+                    <select id="material">
+                        <option value="PLA">PLA (general purpose biodegradable plastic)</option>
+                        <option value="ABS">ABS (stronger than PLA and less prone to melting)</option>
+                    </select>
+                </p>
+                <p>
+                    <label for="detail">Enter addition detail and information about your print<br></label>
+                    <textarea id="detail" rows="5" cols="60"></textarea>
+                </p>
+                <p><input type="submit" value = ' Submit ' style="background-color: 1C6EA4; color: aliceblue; font-size: large;"></p>
+            </form>
+        </div>  
+    </body>
+</html>
