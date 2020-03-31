@@ -14,7 +14,9 @@ login_manager = LoginManager()
 
 def create_app(test_config=None):
     """Create and configure an instance of the Flask application."""
+
     app = Flask(__name__, instance_relative_config=True)
+
 
     # some deploy systems set the database url in the environ
     app = Flask(__name__)
@@ -34,7 +36,6 @@ def create_app(test_config=None):
         # load the test config if passed in
         app.config.update(test_config)
 
-    
 
     # initialize Flask-SQLAlchemy and the init-db command
     db.init_app(app)
@@ -44,6 +45,7 @@ def create_app(test_config=None):
 
     login_manager.init_app(app)
 
+
     # apply the blueprints to the app
     from . import homepage
 
@@ -51,6 +53,7 @@ def create_app(test_config=None):
 
     # make "index" point at "/", which is handled by "blog.index"
     app.add_url_rule("/", endpoint="index")
+
 
     return app
 

@@ -22,7 +22,7 @@ from flask import session, Blueprint
 from .DBTableCreation import Users
 from . import db, login_manager
 
-bp = Blueprint("homepage", __name__, url_prefix="/app")
+bp = Blueprint("homepage", __name__, url_prefix="")
 
 # Configuration
 GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
@@ -52,10 +52,8 @@ def index3():
     if current_user.is_authenticated:
         return (
             "<p>Hello, {}! You're logged in! Email: {}</p>"
-            "<div><p>Google Profile Picture:</p>"
-            '<img src="{}" alt="Google profile pic"></img></div>'
             '<a class="button" href="/logout">Logout</a>'.format(
-                current_user.name, current_user.email, current_user.profile_pic
+                current_user.name, current_user.email
             )
         )
     else:
@@ -117,7 +115,7 @@ def callback():
     # The user authenticated with Google, authorized our
     # app, and now we've verified their email through Google!
     if userinfo_response.json().get("email_verified"):
-        unique_id = userinfo_response.json()["sub"]
+        #unique_id = int(userinfo_response.json()["sub"])
         users_email = userinfo_response.json()["email"]
         picture = userinfo_response.json()["picture"]
         users_name = userinfo_response.json()["name"]
@@ -126,12 +124,15 @@ def callback():
 
     # Create a user in our db with the information provided
     # by Google
-    user = Users(id=unique_id, name=users_name, email=users_email)
+    
 
     # Doesn't exist? Add to database
-    if not Users.query.get(unique_id):
+    user = Users.query.filter_by(email=users_email).first()
+    if not user:
         #User.create(unique_id, users_name, users_email, picture)
+        user = Users(name=users_name, email=users_email)
         db.session.add(user)
+        db.session.commit()
 
     # Begin user session by logging the user in
     login_user(user)
