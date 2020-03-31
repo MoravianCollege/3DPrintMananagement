@@ -1,14 +1,28 @@
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/kschmall/Documents/Projects/FullStackDev/SQLAlchemyDBs/fullStackdbs.db'
-db = SQLAlchemy(app)
+import flask_login
+from . import db
 
 
-class Workers(db.Model):
+#db.Model.metadata.reflect(db.engine)
+
+class Users(db.Model, flask_login.UserMixin):
+    #__table__ = db.Model.metadata.tables['Users']
+
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), unique=True, nullable=False)
+    name = db.Column(db.String(80), unique=False, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+
+    def get_id(self):
+        return self.id
+
+    def __repr__(self):
+        return '<Users %r>' % self.name
+
+    
+class Workers(db.Model):
+    #__table__ = db.Model.metadata.tables['Workers']
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), unique=False, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     is_Admin = db.Column(db.Boolean, unique=False, default=False)
     is_Active = db.Column(db.Boolean, unique=False, default=False)
@@ -17,6 +31,8 @@ class Workers(db.Model):
         return '<Workers %r>' % self.name
 
 class Project(db.Model):
+   # __table__ = db.Model.metadata.tables['Project']
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True, nullable=False)
     description = db.Column(db.String(500), unique=False, nullable=False)
@@ -43,6 +59,8 @@ class Project(db.Model):
 #         # shouldnt return name, what should this return?
 
 class Model(db.Model):
+    #__table__ = db.Model.metadata.tables['Model']
+
     id = db.Column(db.Integer, primary_key=True)
     project_ID= db.Column(db.Integer, unique=False) # reference project Id
     status = db.Column(db.String(50), unique=False, nullable=False) # ref project status
@@ -52,6 +70,8 @@ class Model(db.Model):
         return '<Model %r>' % self.id
 
 class Print(db.Model):
+    #__table__ = db.Model.metadata.tables['Print']
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True, nullable=False)
     base_Settings = db.Column(db.String(80), unique=False, nullable=False)
@@ -67,6 +87,8 @@ class Print(db.Model):
 
 
 class Print_Events(db.Model):
+    #__table__ = db.Model.metadata.tables['Print_Events']
+
     id = db.Column(db.Integer, primary_key=True)
     type = db.Column(db.String(80), unique=False, nullable=False)
     when = db.Column(db.DateTime, unique=False, nullable=True)
@@ -76,6 +98,8 @@ class Print_Events(db.Model):
         return '<Print Events %r>' % self.id
 
 class Print_Settings(db.Model):
+    #__table__ = db.Model.metadata.tables['Print_Settings']
+
     id = db.Column(db.Integer, primary_key=True)
     print_ID = db.Column(db.Integer, unique=False) # reference print Id
     model_ID = db.Column(db.Integer, unique=False) # reference model Id
@@ -87,6 +111,8 @@ class Print_Settings(db.Model):
         return '<Print Settings %r>' % self.id
 
 class Print_Models(db.Model):
+    #__table__ = db.Model.metadata.tables['Print_Models']
+
     id = db.Column(db.Integer, primary_key=True)
     print_ID = db.Column(db.Integer, unique=False) # reference print Id
     model_ID = db.Column(db.Integer, unique=False) # reference model Id
@@ -95,6 +121,8 @@ class Print_Models(db.Model):
         return '<Print Models %r>' % self.id
 
 class Settings(db.Model):
+    #__table__ = db.Model.metadata.tables['Settings']
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True, nullable=False)
     
@@ -102,6 +130,8 @@ class Settings(db.Model):
         return '<Settings %r>' % self.name
 
 class Print_Comments(db.Model):
+    #__table__ = db.Model.metadata.tables['Print_Comments']
+
     id = db.Column(db.Integer, primary_key=True)
     print_ID = db.Column(db.Integer, unique=False) # reference print Id
     workers_ID = db.Column(db.Integer, unique=False) # reference worker Id
@@ -112,6 +142,8 @@ class Print_Comments(db.Model):
         return '<Print Comments %r>' % self.id
 
 class Project_Comments(db.Model):
+    #__table__ = db.Model.metadata.tables['Project_Comments']
+
     id = db.Column(db.Integer, primary_key=True)
     project_ID = db.Column(db.Integer, unique=False) # reference project Id
     workers_ID = db.Column(db.Integer, unique=False) # reference worker Id
@@ -122,6 +154,8 @@ class Project_Comments(db.Model):
         return '<Project Comments %r>' % self.id
 
 class Model_Comments(db.Model):
+    #__table__ = db.Model.metadata.tables['Model_Comments']
+
     id = db.Column(db.Integer, primary_key=True)
     model_ID = db.Column(db.Integer, unique=False) # reference model Id
     workers_ID = db.Column(db.Integer, unique=False) # reference worker Id
