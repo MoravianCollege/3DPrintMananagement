@@ -20,7 +20,7 @@ def create_app(test_config=None):
 
     # some deploy systems set the database url in the environ
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/kschmall/Documents/Projects/FullStackDev/SQLAlchemyDBs/fullStackdbs.db'
+    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///" + os.path.join(os.path.dirname(__file__), 'database.db')
 
 
     app.config.from_mapping(
