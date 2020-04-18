@@ -244,21 +244,15 @@ def failure():
 
 @app.route("/pause-printer/Xerox", methods=["GET"])
 def pause_xerox():
-    try:
-        print('in the funct')
-        if request.is_xhr:
-            print('tis a request good sire')
-            Xerox = PrintJob(Ultimaker("172.31.228.191", None, None))
-            Xerox.pause()
-        else:
-            print('tis was not a request good sire')
-            Xerox = PrintJob(Ultimaker("172.31.228.191", None, None))
-            Xerox.pause()
-    except:
+    print('in the funct')
+    if request.is_xhr:
+        print('tis a request good sire')
         Xerox = PrintJob(Ultimaker("172.31.228.191", None, None))
-        Xerox.pause()        
-        return 'yes'
-
+        Xerox.pause()
+    else:
+        print('tis was not a request good sire')
+        Xerox = PrintJob(Ultimaker("172.31.228.191", None, None))
+        Xerox.pause()
 
 @app.route("/pause-printer/Gutenberg", methods=["GET"])
 def pause_gutenberg():
@@ -269,20 +263,15 @@ def pause_gutenberg():
 @app.route("/resume-printer/Xerox", methods=["GET"])
 def resume_xerox():
     print('in the funct')
-    try:
-        if request.is_xhr:
-            print('tis a request good sire')
-            Xerox = PrintJob(Ultimaker("172.31.228.191", None, None))
-            Xerox.resume()
-        else:
-            print('tis was not a request good sire')
-            Xerox = PrintJob(Ultimaker("172.31.228.191", None, None))
-            Xerox.resume()
-            return jsonify({'success': 'true'})
-    except:
+    if request.is_xhr:
+        print('tis a request good sire')
         Xerox = PrintJob(Ultimaker("172.31.228.191", None, None))
-        Xerox.resume()        
-        return 'yes'
+        Xerox.resume()
+    else:
+        print('tis was not a request good sire')
+        Xerox = PrintJob(Ultimaker("172.31.228.191", None, None))
+        Xerox.resume()
+        return jsonify({'success': 'true'})
 
 
 @app.route("/resume-printer/Gutenberg", methods=["GET"])

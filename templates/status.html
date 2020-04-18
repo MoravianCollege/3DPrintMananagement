@@ -1,6 +1,7 @@
 <html style="overflow-x:hidden">
     <link rel="stylesheet" type="text/css" href="static/base.css"/>
     <body onload="setButtons(  )">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <div class="sidenav">
             <a href="/form">Request Form</a>
             <a href="/status">Printer Status</a>
@@ -23,32 +24,8 @@
                         </p>
                         <p style="display: none;" id="X_status">{{ X_status }}</p>
                         <div style="text-align: center;">
-                            <button onclick="pauseXerox()" id="pauseX">Pause</button>
-                            <script>
-                                function pauseXerox() {
-                                    var button = document.getElementById("pauseX");
-                                    if(button.innerText === "Pause"){
-                                        window.alert('srequesting')
-                                        window.alert('suesting')
-                                        xhr = new XMLHttpRequest();
-                                        window.alert('senting')
-                                        xhr.open(GET, 'https://https://127.0.0.1:5000/pause-printer/Xerox');
-                                        window.alert('sent')
-                                        xhr.send()
-                                        button.innerText = "Resume";
-                                    }
-                                    else{
-                                        window.alert('srequesting')
-                                        window.alert('suesting')
-                                        xhr = new XMLHttpRequest();
-                                        window.alert('senting')
-                                        xhr.open(GET, 'https://https://127.0.0.1:5000/resume-printer/Xerox');
-                                        window.alert('sent')
-                                        xhr.send()
-                                        button.innerText = "Pause";
-                                    }
-                                }
-                            </script>
+                            <button id="pauseX" style="display: none;">Pause</button>
+                            <button id="resumeX" style="display: none">Resume</button>
                         </div>
                     </div>
                 </div>
@@ -62,49 +39,41 @@
                         </p>
                         <p style="display: none;" id="G_status">{{ G_status }}</p>
                         <div style="text-align: center;">
-                            <button onclick="pauseGutenberg()" id="pauseG">Pause</button>
-                            <script>
-                                function pauseGutenberg() {
-                                    var text = document.getElementById("pauseG");
-                                    if(button.innerText === "Pause"){
-                                        xhr = new XMLHttpRequest();
-                                        xhr.open(POST, '/pause-printer/Gutenberg', true);
-                                        button.innerText = "Resume";
-                                    }
-                                    else{
-                                        xhr = new XMLHttpRequest();
-                                        xhr.open(POST, '/resume-printer/Gutenberg', true);
-                                        button.innerText = "Pause";
-                                    }
-                                }
-                            </script>
+                            <button id="pauseG" style="display: none;">Pause</button>
+                            <button id="resumeG" style="display: none;">Resume</button>
                         </div>
                     </div>
                 </div>
             </div>
           </div>
     </body>
+    <script type=text/javascript> $(function() { $("#pauseG").click(function (event) { $.getJSON('/pause-printer/Gutenberg', { },
+        function(data) { }); return false; }); }); </script>
+    <script type=text/javascript> $(function() { $("#resumeG").click(function (event) { $.getJSON('/resume-printer/Gutenberg', { },
+        function(data) { }); return false; }); }); </script>
+    <script type=text/javascript> $(function() { $("#pauseX").click(function (event) { $.getJSON('/pause-printer/Xerox', { },
+        function(data) { }); return false; }); }); </script>
+    <script type=text/javascript> $(function() { $("#resumeX").click(function (event) { $.getJSON('/resume-printer/Xerox', { },
+        function(data) { }); return false; }); }); </script>
     <script>
         function setButtons() {
             var G_status = document.getElementById("G_status");
             var X_status = document.getElementById("X_status");
-            var gutenButton = document.getElementById("pauseG");
-            var xeroxButton = document.getElementById("pauseX");
 
             if ("PRINTING" === G_status.innerText) {
-                gutenButton.innerText = "Pause";
+                var gutenButton = document.getElementById("pauseG");
+                gutenButton.style.display = 'contents'
             } else if ("PAUSED" === G_status.innerText) {
-                gutenButton.innerText = "Resume";
-            } else {
-                gutenButton.style.display = "none";
+                var gutenButton = document.getElementById("resumeG");
+                gutenButton.style.display = 'contents'
             }
 
             if ("PRINTING" === X_status.innerText) {
-                xeroxButton.innerText = "Pause";
+                var xeroxButton = document.getElementById("pauseX");
+                xeroxButton.style.display = 'contents'
             } else if ("PAUSED" === X_status.innerText) {
-                xeroxButton.innerText = "Resume";
-            } else {
-                xeroxButton.style.display = "none";
+                var xeroxButton = document.getElementById("resumeX");
+                xeroxButton.style.display = 'contents'
             }
         }
     </script>
