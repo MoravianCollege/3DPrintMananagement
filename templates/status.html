@@ -1,6 +1,6 @@
 <html style="overflow-x:hidden">
     <link rel="stylesheet" type="text/css" href="static/base.css"/>
-    <body>
+    <body onload="setButtons(  )">
         <div class="sidenav">
             <a href="/form">Request Form</a>
             <a href="/status">Printer Status</a>
@@ -17,19 +17,36 @@
                     <div class="leftside">
                         <p> Xerox<br></p>
                         <p style="text-align: center;">
-                            {{ X_status }}<br>
+                            STATUS: {{ X_status }}<br>
                             {{ X_name }}<br>
                             {{ X_finish }}
                         </p>
+                        <p style="display: none;" id="X_status">{{ X_status }}</p>
                         <div style="text-align: center;">
                             <button onclick="pauseXerox()" id="pauseX">Pause</button>
                             <script>
                                 function pauseXerox() {
-                                    var x = document.getElementById("pauseX");
-                                    if(x.innerText == "Pause")
-                                        x.innerText = "Resume"
-                                    else
-                                        x.innerText = "Pause"
+                                    var button = document.getElementById("pauseX");
+                                    if(button.innerText === "Pause"){
+                                        window.alert('srequesting')
+                                        window.alert('suesting')
+                                        xhr = new XMLHttpRequest();
+                                        window.alert('senting')
+                                        xhr.open(GET, 'https://https://127.0.0.1:5000/pause-printer/Xerox');
+                                        window.alert('sent')
+                                        xhr.send()
+                                        button.innerText = "Resume";
+                                    }
+                                    else{
+                                        window.alert('srequesting')
+                                        window.alert('suesting')
+                                        xhr = new XMLHttpRequest();
+                                        window.alert('senting')
+                                        xhr.open(GET, 'https://https://127.0.0.1:5000/resume-printer/Xerox');
+                                        window.alert('sent')
+                                        xhr.send()
+                                        button.innerText = "Pause";
+                                    }
                                 }
                             </script>
                         </div>
@@ -39,19 +56,26 @@
                     <div class="rightside">
                         <p> Gutenberg<br></p>
                         <p style="text-align: center;">
-                            {{ G_status }}<br>
+                            STATUS: {{ G_status }}<br>
                             {{ G_name }}<br>
                             {{ G_finish }}
                         </p>
+                        <p style="display: none;" id="G_status">{{ G_status }}</p>
                         <div style="text-align: center;">
                             <button onclick="pauseGutenberg()" id="pauseG">Pause</button>
                             <script>
                                 function pauseGutenberg() {
-                                    var x = document.getElementById("pauseG");
-                                    if(x.innerText == "Pause")
-                                        x.innerText = "Resume"
-                                    else
-                                        x.innerText = "Pause"
+                                    var text = document.getElementById("pauseG");
+                                    if(button.innerText === "Pause"){
+                                        xhr = new XMLHttpRequest();
+                                        xhr.open(POST, '/pause-printer/Gutenberg', true);
+                                        button.innerText = "Resume";
+                                    }
+                                    else{
+                                        xhr = new XMLHttpRequest();
+                                        xhr.open(POST, '/resume-printer/Gutenberg', true);
+                                        button.innerText = "Pause";
+                                    }
                                 }
                             </script>
                         </div>
@@ -60,4 +84,28 @@
             </div>
           </div>
     </body>
+    <script>
+        function setButtons() {
+            var G_status = document.getElementById("G_status");
+            var X_status = document.getElementById("X_status");
+            var gutenButton = document.getElementById("pauseG");
+            var xeroxButton = document.getElementById("pauseX");
+
+            if ("PRINTING" === G_status.innerText) {
+                gutenButton.innerText = "Pause";
+            } else if ("PAUSED" === G_status.innerText) {
+                gutenButton.innerText = "Resume";
+            } else {
+                gutenButton.style.display = "none";
+            }
+
+            if ("PRINTING" === X_status.innerText) {
+                xeroxButton.innerText = "Pause";
+            } else if ("PAUSED" === X_status.innerText) {
+                xeroxButton.innerText = "Resume";
+            } else {
+                xeroxButton.style.display = "none";
+            }
+        }
+    </script>
 </html>

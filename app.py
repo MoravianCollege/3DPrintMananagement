@@ -4,7 +4,7 @@ import os
 import sqlite3
 
 # Third party libraries
-from flask import Flask, redirect, request, url_for, render_template
+from flask import Flask, redirect, request, url_for, render_template, jsonify
 from flask_login import (
     LoginManager,
     current_user,
@@ -168,9 +168,8 @@ def printer_status():
         Xerox_finish = get_remaining_time(Xerox)
        
     except Exception as e:
-        
         # If Printer is not doing a job
-        if str(e) == 'Not found':
+        if str(e) == "'Not found'":
             Xerox_status = PrintJobState.NO_JOB 
         
         # Printer is off, UNKNOWN = OFF
@@ -189,9 +188,8 @@ def printer_status():
         
        
     except Exception as e:
-        
         # If Printer is not doing a job
-        if str(e) == 'Not found':
+        if str(e) == "'Not found'":
             Gutenberg_status = PrintJobState.NO_JOB
 
         # Printer is off, UNKNOWN = OFF
@@ -244,6 +242,55 @@ def failure():
     return render_template('failure.html')
 
 
+@app.route("/pause-printer/Xerox", methods=["GET"])
+def pause_xerox():
+    try:
+        print('in the funct')
+        if request.is_xhr:
+            print('tis a request good sire')
+            Xerox = PrintJob(Ultimaker("172.31.228.191", None, None))
+            Xerox.pause()
+        else:
+            print('tis was not a request good sire')
+            Xerox = PrintJob(Ultimaker("172.31.228.191", None, None))
+            Xerox.pause()
+    except:
+        Xerox = PrintJob(Ultimaker("172.31.228.191", None, None))
+        Xerox.pause()        
+        return 'yes'
+
+
+@app.route("/pause-printer/Gutenberg", methods=["GET"])
+def pause_gutenberg():
+    Gutenberg = PrintJob(Ultimaker("172.31.228.190", None, None))
+    Gutenberg.pause()
+
+
+@app.route("/resume-printer/Xerox", methods=["GET"])
+def resume_xerox():
+    print('in the funct')
+    try:
+        if request.is_xhr:
+            print('tis a request good sire')
+            Xerox = PrintJob(Ultimaker("172.31.228.191", None, None))
+            Xerox.resume()
+        else:
+            print('tis was not a request good sire')
+            Xerox = PrintJob(Ultimaker("172.31.228.191", None, None))
+            Xerox.resume()
+            return jsonify({'success': 'true'})
+    except:
+        Xerox = PrintJob(Ultimaker("172.31.228.191", None, None))
+        Xerox.resume()        
+        return 'yes'
+
+
+@app.route("/resume-printer/Gutenberg", methods=["GET"])
+def resume_gutenberg():
+    Gutenberg = PrintJob(Ultimaker("172.31.228.190", None, None))
+    Gutenberg.resume()
+
+
 def get_google_provider_cfg():
     return requests.get(GOOGLE_DISCOVERY_URL).json()
 
@@ -282,30 +329,31 @@ def get_status_string(Xerox, Gutenberg):
 
 def get_status_message(status):
     if status == PrintJobState.NO_JOB:
-        return "The Printer is not currently working on a print"
+        return "IDLE"
     elif status == PrintJobState.PRINTING:
-        return "The Printer is currently working on a print"
+        return "PRINTING"
     elif status == PrintJobState.PAUSING:
-        return "The Printer is pausing the print"
+        return "PAUSING PRINT"
     elif status == PrintJobState.PAUSED:
-        return "The Printer is currently paused"
+        return "PAUSED"
     elif status == PrintJobState.RESUMING:
-        return "The Printer is resuming"
+        return "RESUMING PRINT"
     elif status == PrintJobState.PRE_PRINT:
-        return "The Printer is currently getting ready to start a print"
+        return "PREPARING"
     elif status == PrintJobState.POST_PRINT:
-        return "The Printer is finished with a print"
+        return "FINISHED"
     elif status == PrintJobState.WAIT_CLEANUP:
-        return "The Printer is waiting for a member to clean up a finished print"
+        return "WAITING FOR CLEANUP"
     elif status == PrintJobState.WAIT_USER_ACTION:
-        return "The Printer is waiting for a member to reset it"
+        return "WAITING FOR RESET"
     else:
-        return "The Printer is currently turned off"
+        return "OFF"
 
 
 def get_remaining_time(print_job):
     return ("Remaining time for print: " +
             str(print_job.time_total - print_job.time_elapsed))
+
 
 if __name__ == "__main__":
     # Run HTTPS
