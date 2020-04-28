@@ -43,7 +43,6 @@ def create_app(test_config=None):
     app.cli.add_command(init_db_command)
     #db.Model.metadata.reflect(db.engine)
 
-
     login_manager.init_app(app)
 
 

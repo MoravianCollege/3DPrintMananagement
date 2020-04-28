@@ -20,7 +20,7 @@ import requests
 from flask_sqlalchemy import SQLAlchemy
 
 # Internal imports
-from .DBTableCreation import Users
+from .DBTableCreation import Users, Workers
 from . import db, login_manager
 from .ultimaker import Ultimaker, PrintJob, PrintJobState, PrintJobResult
 
