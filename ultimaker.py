@@ -76,16 +76,16 @@ class Ultimaker:
         return self._auth
 
     def _get(self, cmd):
-        return Ultimaker._check_response(requests.get(self._url(cmd), auth=self._auth))
+        return Ultimaker._check_response(requests.get(self._url(cmd), auth=self._auth, timeout=1))
     def _put(self, cmd, data):
         return Ultimaker._check_response(requests.put(self._url(cmd),
-                                                      json=data, auth=self._get_auth()))
+                                                      json=data, auth=self._get_auth(), timeout=1))
     def _post(self, cmd, data):
         return Ultimaker._check_response(requests.post(self._url(cmd),
-                                                       json=data, auth=self._get_auth()))
+                                                       json=data, auth=self._get_auth(), timeout=1))
     def _delete(self, cmd, data=None):
         return Ultimaker._check_response(requests.delete(self._url(cmd),
-                                                         json=data, auth=self._get_auth()))
+                                                         json=data, auth=self._get_auth(), timeout=1))
 
     def _get_file(self, cmd):
         response = requests.get(self._url(cmd), auth=self._get_auth())
