@@ -2,11 +2,8 @@ import flask_login
 from . import db
 
 
-#db.Model.metadata.reflect(db.engine)
-
 class Users(db.Model, flask_login.UserMixin):
-    #__table__ = db.Model.metadata.tables['Users']
-
+    __tablename__ = 'Users'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=False, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
@@ -19,8 +16,7 @@ class Users(db.Model, flask_login.UserMixin):
 
     
 class Workers(db.Model):
-    #__table__ = db.Model.metadata.tables['Workers']
-
+    __tablename__ = 'Workers'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=False, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
@@ -31,8 +27,7 @@ class Workers(db.Model):
         return '<Workers %r>' % self.name
 
 class Project(db.Model):
-   # __table__ = db.Model.metadata.tables['Project']
-
+    __tablename__ = 'Project'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True, nullable=False)
     description = db.Column(db.String(500), unique=False, nullable=False)
@@ -45,6 +40,7 @@ class Project(db.Model):
     def __repr__(self):
         return '<Project %r>' % self.name
 
+# Make Enum
 # class Status(db.Model):
 #     submimtted = db.Column(db.String(80), unique=False, nullable=False)
 #     accepted = db.Column(db.String(80), unique=False, nullable=False)
@@ -59,8 +55,7 @@ class Project(db.Model):
 #         # shouldnt return name, what should this return?
 
 class Model(db.Model):
-    #__table__ = db.Model.metadata.tables['Model']
-
+    __tablename__ = 'Model'
     id = db.Column(db.Integer, primary_key=True)
     project_ID= db.Column(db.Integer, unique=False) # reference project Id
     status = db.Column(db.String(50), unique=False, nullable=False) # ref project status
@@ -70,8 +65,7 @@ class Model(db.Model):
         return '<Model %r>' % self.id
 
 class Print(db.Model):
-    #__table__ = db.Model.metadata.tables['Print']
-
+    __tablename__ = 'Print'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True, nullable=False)
     base_Settings = db.Column(db.String(80), unique=False, nullable=False)
@@ -87,8 +81,7 @@ class Print(db.Model):
 
 
 class Print_Events(db.Model):
-    #__table__ = db.Model.metadata.tables['Print_Events']
-
+    __tablename__ = 'Print_Events'
     id = db.Column(db.Integer, primary_key=True)
     type = db.Column(db.String(80), unique=False, nullable=False)
     when = db.Column(db.DateTime, unique=False, nullable=True)
@@ -98,8 +91,7 @@ class Print_Events(db.Model):
         return '<Print Events %r>' % self.id
 
 class Print_Settings(db.Model):
-    #__table__ = db.Model.metadata.tables['Print_Settings']
-
+    __tablename__ = 'Print_Settings'
     id = db.Column(db.Integer, primary_key=True)
     print_ID = db.Column(db.Integer, unique=False) # reference print Id
     model_ID = db.Column(db.Integer, unique=False) # reference model Id
@@ -111,8 +103,7 @@ class Print_Settings(db.Model):
         return '<Print Settings %r>' % self.id
 
 class Print_Models(db.Model):
-    #__table__ = db.Model.metadata.tables['Print_Models']
-
+    __tablename__ = 'Print_Models'
     id = db.Column(db.Integer, primary_key=True)
     print_ID = db.Column(db.Integer, unique=False) # reference print Id
     model_ID = db.Column(db.Integer, unique=False) # reference model Id
@@ -121,8 +112,7 @@ class Print_Models(db.Model):
         return '<Print Models %r>' % self.id
 
 class Settings(db.Model):
-    #__table__ = db.Model.metadata.tables['Settings']
-
+    __tablename__ = 'Settings'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True, nullable=False)
     
@@ -130,8 +120,7 @@ class Settings(db.Model):
         return '<Settings %r>' % self.name
 
 class Print_Comments(db.Model):
-    #__table__ = db.Model.metadata.tables['Print_Comments']
-
+    __tablename__ = 'Print_Comments'
     id = db.Column(db.Integer, primary_key=True)
     print_ID = db.Column(db.Integer, unique=False) # reference print Id
     workers_ID = db.Column(db.Integer, unique=False) # reference worker Id
@@ -142,8 +131,7 @@ class Print_Comments(db.Model):
         return '<Print Comments %r>' % self.id
 
 class Project_Comments(db.Model):
-    #__table__ = db.Model.metadata.tables['Project_Comments']
-
+    __tablename__ = 'Project_Comments'
     id = db.Column(db.Integer, primary_key=True)
     project_ID = db.Column(db.Integer, unique=False) # reference project Id
     workers_ID = db.Column(db.Integer, unique=False) # reference worker Id
@@ -154,8 +142,7 @@ class Project_Comments(db.Model):
         return '<Project Comments %r>' % self.id
 
 class Model_Comments(db.Model):
-    #__table__ = db.Model.metadata.tables['Model_Comments']
-
+    __tablename__ = 'Model_Comments'
     id = db.Column(db.Integer, primary_key=True)
     model_ID = db.Column(db.Integer, unique=False) # reference model Id
     workers_ID = db.Column(db.Integer, unique=False) # reference worker Id
