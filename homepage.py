@@ -20,7 +20,7 @@ import requests
 from flask_sqlalchemy import SQLAlchemy
 
 # Internal imports
-from .DBTableCreation import Users
+from .DBTableCreation import Users, Workers
 from . import db, login_manager
 from .ultimaker import Ultimaker, PrintJob, PrintJobState, PrintJobResult
 
@@ -208,6 +208,28 @@ def queue():
 @login_required
 def members():
     return render_template('members.html')
+
+@bp.route("/add_workers")
+@login_required
+def add_workers():
+    worker = Workers(name='Jeffery Bush', email='bushj@moravian.edu', is_Admin=True, is_Active=True)
+    db.session.add(worker)
+
+    worker = Workers(name='Brandon Adams', email='adamsb02@moravian.edu', is_Admin=True, is_Active=True)
+    db.session.add(worker)
+
+    worker = Workers(name='Anthony Estephan', email='estephana02@moravian.edu', is_Admin=True, is_Active=True)
+    db.session.add(worker)
+
+    worker = Workers(name='Riley Kirkpatrick', email='kirkpatrickr@moravian.edu', is_Admin=True, is_Active=True)
+    db.session.add(worker)
+
+    worker = Workers(name='Kiersten Schmall', email='schmallk@moravian.edu', is_Admin=False, is_Active=True)
+    db.session.add(worker)
+    
+    db.session.commit()
+    print("Added workers to db")
+    return None
 
 
 @bp.route("/success", methods=["POST"])
