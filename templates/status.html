@@ -1,3 +1,4 @@
+<meta http-equiv="refresh" content="5">
 <html style="overflow-x:hidden">
     <link rel="stylesheet" type="text/css" href="static/base.css"/>
     <body onload="setButtons(  )">
@@ -24,8 +25,8 @@
                         </p>
                         <p style="display: none;" id="X_status">{{ X_status }}</p>
                         <div style="text-align: center;">
-                            <button id="pauseX">Pause</button>
-                            <button id="resumeX">Resume</button>
+                            <button id="pauseX" style="display: none;">Pause</button>
+                            <button id="resumeX" style="display: none;">Resume</button>
                         </div>
                     </div>
                 </div>
@@ -39,8 +40,8 @@
                         </p>
                         <p style="display: none;" id="G_status">{{ G_status }}</p>
                         <div style="text-align: center;">
-                            <button id="pauseG">Pause</button>
-                            <button id="resumeG">Resume</button>
+                            <button id="pauseG" style="display: none;">Pause</button>
+                            <button id="resumeG" style="display: none;">Resume</button>
                         </div>
                     </div>
                 </div>
@@ -61,30 +62,20 @@
             var X_status = document.getElementById("X_status");
             
             if ("PRINTING" === G_status.innerText) {
-                var gutenButton = document.getElementById("resumeG");
-                gutenButton.style.display = 'none'
-            } else if ("PAUSED" === G_status.innerText) {
                 var gutenButton = document.getElementById("pauseG");
-                gutenButton.style.display = 'none'
-            } else {
-                var gutenButtonP = document.getElementById("pauseG");
-                var gutenButtonR = document.getElementById("resumeG");
-                gutenButtonP.style.display = 'none'
-                gutenButtonR.style.display = 'none'
+                gutenButton.style.display = 'block'
+                
+            } else if ("PAUSED" === G_status.innerText) {
+                var gutenButton = document.getElementById("resumeG");
+                gutenButton.style.display = 'block'
             }
 
             if ("PRINTING" === X_status.innerText) {
-                var xeroxButton = document.getElementById("resumeX");
-                xeroxButton.style.display = 'none'
-            } else if ("PAUSED" === X_status.innerText) {
                 var xeroxButton = document.getElementById("pauseX");
-                xeroxButton.style.display = 'none'
-            } else {
-                var xeroxButtonP = document.getElementById("pauseX");
-                var xeroxButtonR = document.getElementById("resumeX");
-                xeroxButtonP.style.display = 'none'
-                xeroxButtonR.style.display = 'none'
-                
+                xeroxButton.style.display = 'block'
+            } else if ("PAUSED" === X_status.innerText) {
+                var xeroxButton = document.getElementById("resumeX");
+                xeroxButton.style.display = 'block';
             }
         }
     </script>
