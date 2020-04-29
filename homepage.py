@@ -210,7 +210,96 @@ def queue():
 @bp.route("/members")
 @login_required
 def members():
-    return render_template('members.html')
+    return render_template('members.html', access=is_admin())
+
+
+@bp.route("/admin-check")
+@login_required
+def check():
+    if is_admin():
+        return render_template('management.html')
+    
+    return redirect(url_for("index")) 
+
+
+@bp.route("/manage-members", methods=["POST"])
+@login_required
+def manage():
+    if is_admin():
+        # Get results from request form
+        results = request.form
+        result = {}
+        
+        # Add to Workers
+        email = results.get('email')
+        if not is_empty_field(email):
+            worker = Workers.query.filter_by(email=email).first()
+            print(email)
+            print(worker is None)
+            if worker is None:
+                result['add'] = {'name': results.get('name'),
+                                'email': email}
+                worker = Workers(name=results.get('name'), email=email, is_Admin=False, is_Active=False)
+                db.session.add(worker)
+                db.session.commit()
+        
+        # Give worker member access
+        active = results.get('active')
+        if not is_empty_field(active):
+            worker = Workers.query.filter_by(email=active).first()
+            
+            if worker is not None:
+                worker.is_Active = True
+                db.session.commit()
+                result['activate'] = active
+
+        # Remove worker member access
+        deactive = results.get('deactive')
+        if not is_empty_field(deactive):
+            worker = Workers.query.filter_by(email=deactive).first()
+            
+            if worker is not None:
+                worker.is_Active = False
+                db.session.commit()
+                result['deactivate'] = deactive
+        
+        # Give worker admin access
+        admin = results.get('admin')
+        if not is_empty_field(admin):
+            worker = Workers.query.filter_by(email=admin).first()
+            
+            if worker is not None:
+                worker.is_Admin = True
+                db.session.commit()
+                result['admin'] = admin
+        
+        # Remove worker admin access
+        deadmin = results.get('deadmin')
+        if not is_empty_field(deadmin):
+            worker = Workers.query.filter_by(email=deadmin).first()
+            
+            if worker is not None:
+                worker.is_Admin = False
+                db.session.commit()
+                result['remove_admin'] = deadmin
+        
+        # Remove worker from Workers
+        remove = results.get('remove')
+        if not is_empty_field(remove):
+            worker = Workers.query.filter_by(email=remove).first()
+            
+            if worker is not None:
+                db.session.delete(worker)
+                db.session.commit()
+                result['remove'] = remove
+        
+        # Nothing occured
+        if len(result) == 0:
+            result['Submission'] = 'Nothing'
+        
+        return json.dumps(result)
+
+    return redirect(url_for("index"))
 
 
 @bp.route("/success", methods=["POST"])
@@ -348,11 +437,25 @@ def get_remaining_time(print_job):
 def is_active_worker():
     worker = Workers.query.filter_by(email=current_user.email).first()
 
+    # If the worker exists
     if worker is not None:
         return worker.is_Active
     
     return False
 
+
+def is_admin():
+    worker = Workers.query.filter_by(email=current_user.email).first()
+
+    # If the worker exists
+    if worker is not None:
+        return worker.is_Admin
+    
+    return False
+    
+
+def is_empty_field(field):
+    return field == ''
 
 if __name__ == "__main__":
     # Run HTTPS

@@ -1,0 +1,46 @@
+<html>
+  <link rel="stylesheet" type="text/css" href="static/base.css"/>
+  <body>
+        <div class="sidenav">
+            <a href="/form">Request Form</a>
+            <a href="/status">Printer Status</a>
+            <a href="/queue">Print Queue</a>
+            <a href="/members">Members</a>
+            <a href="/logout">Logout</a>
+        </div>
+        <div class="main">
+            <h1 style="text-align: center;">Moravian College<br>3D Printing</h1>
+            <form action='/manage-members' method = "POST">
+                <p>For now, there is no restrictions how many of these fields you can do at once here. The code is written to handle non empty fields.</p>
+                <p>
+                    Add a worker:<br>
+                    Enter the name to be displayed (optional for now):
+                    <input type="text" name="name"/><br>
+                    Enter the email of the person (Not optional if you want to add a person):
+                    <input type="text" name="email"/>
+                </p>
+                <p>
+                   Enter email of worker to give active status<br>
+                <input type="text" name="active"/>
+                </p>
+                <p>
+                    Enter email of worker to remove active status<br>
+                    <input type="text" name="deactive"/>
+                </p>
+                <p>
+                    Enter email of worker to give admin status<br>
+                <input type="text" name="admin"/>
+                </p>
+                <p>
+                    Enter email of worker to remove admin status<br>
+                    <input type="text" name="deadmin"/>
+                </p>
+                <p>
+                    Enter email of worker to remove from Workers<br>
+                    <input type="text" name="remove"/>
+                </p>
+                <p><input type="submit" value = ' Submit ' style="background-color: 1C6EA4; color: aliceblue; font-size: large;"></p>
+            </form>
+        </div>  
+    </body>
+</html>

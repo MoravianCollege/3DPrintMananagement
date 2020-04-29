@@ -1,6 +1,6 @@
 <html>
   <link rel="stylesheet" type="text/css" href="static/base.css"/>
-  <body>
+  <body onload="setButtons()">
         <div class="sidenav">
             <a href="/form">Request Form</a>
             <a href="/status">Printer Status</a>
@@ -11,6 +11,20 @@
         <div class="main">
             <h1 style="text-align: center;">Moravian College<br>3D Printing</h1>
             <p>The queue has not yet been implemented. We are working on getting this page out.<br>We appreciate your patience.</p>
+            <form action='/admin-check'>
+                <input type="submit" id='button' value='Manage Members' style="display: none;">
+            </form>
         </div>  
     </body>
+    <p style="display: none;" id="access">{{ access }}</p>
+    <script>
+        function setButtons() {
+            var access = document.getElementById("access");
+            
+            if (access.innerText == "True") {
+                var admin_button = document.getElementById('button')
+                admin_button.style.display = 'block'
+            }
+        }
+    </script>
 </html>
