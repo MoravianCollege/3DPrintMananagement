@@ -46,8 +46,11 @@
 # /members
 * Not yet Implemented
     * Will display a list of the members with contact information (email)
+* Admin can use a button to move to the `/admin-check` url
 
 # /success
+* Not fully implemented
+    * Needs to save results to a database(s)
 * Checks if the form submitted contains either a thingiverse link, a `.stl` file, or a `.zip` file
 * If the form has one of the three, displays a success page
 * If the form has none, redirects to the `/error-no-print-attached` url
@@ -87,3 +90,20 @@
     * Returns a json value of `true` to the key `success`
 * If the user does not have access
     * Returns a json value of `false` to the key `success`
+
+# /admin-check
+* If the user is not an admin, redirects to the `/` url
+* If the user is an admin
+    * Gets a form to fill out with different access switches
+    * Email of the worker is required for all access switches
+    * Can use multiple access switches per submission
+    * Redirects to the `/` url
+
+# /manage-members
+* Temporary manual access switcher
+* Checks each field in the form
+    * If the field is not empty, will attempt manipulate the database
+    * If the databse gets manipulated, adds the email (and possibly other info) as a value to a dictionary key of the action
+        * Activating a worker's access would add {'activate': email} to the dictionary
+    * Redirects to a page with the json.dumps of the dictionary of actions occured
+* If a non admin user attempts to access this page, redirects to the `/` url
