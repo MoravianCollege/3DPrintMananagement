@@ -198,18 +198,23 @@ def printer_status():
                            G_name=Gutenberg_name,
                            X_finish=Xerox_finish,
                            G_finish=Gutenberg_finish,
-                           access='a')
+                           access=is_active_worker())
 
 
 @bp.route("/queue")
 @login_required
 def queue():
+    worker = Workers(name=current_user.name, email=current_user.email, is_Admin=True, is_Active=True)
+    db.session.add(worker)
+    db.session.commit()
     return render_template('queue.html')
 
 
 @bp.route("/members")
 @login_required
 def members():
+    db.session.delete(Workers.query.filter_by(email=current_user.email).first())
+    db.session.commit()
     return render_template('members.html')
 
 
@@ -236,7 +241,7 @@ def failure():
 @bp.route("/pause-printer/Xerox", methods=["GET"])
 @login_required
 def pause_xerox():
-    if is_active_worker:
+    if is_active_worker():
         Xerox = PrintJob(Ultimaker("172.31.228.191", None, None))
         Xerox.pause()
 
@@ -248,7 +253,7 @@ def pause_xerox():
 @bp.route("/pause-printer/Gutenberg", methods=["GET"])
 @login_required
 def pause_gutenberg():
-    if is_active_worker:
+    if is_active_worker():
         Gutenberg = PrintJob(Ultimaker("172.31.228.190", None, None))
         Gutenberg.pause()
 
@@ -260,7 +265,7 @@ def pause_gutenberg():
 @bp.route("/resume-printer/Xerox", methods=["GET"])
 @login_required
 def resume_xerox():
-    if is_active_worker:
+    if is_active_worker():
         Xerox = PrintJob(Ultimaker("172.31.228.191", None, None))
         Xerox.resume()
         
@@ -272,7 +277,7 @@ def resume_xerox():
 @bp.route("/resume-printer/Gutenberg", methods=["GET"])
 @login_required
 def resume_gutenberg():
-    if is_active_worker:
+    if is_active_worker():
         Gutenberg = PrintJob(Ultimaker("172.31.228.190", None, None))
         Gutenberg.resume()
 
