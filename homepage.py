@@ -18,6 +18,7 @@ from oauthlib.oauth2 import WebApplicationClient
 import requests
 
 from flask_sqlalchemy import SQLAlchemy
+from dotenv import load_dotenv
 
 # Internal imports
 from .DBTableCreation import Users
@@ -27,6 +28,7 @@ from .ultimaker import Ultimaker, PrintJob, PrintJobState, PrintJobResult
 bp = Blueprint("homepage2", __name__, url_prefix="")
 
 # Configuration
+load_dotenv()
 GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
 GOOGLE_CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET')
 GOOGLE_DISCOVERY_URL = (
