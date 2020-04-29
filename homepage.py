@@ -210,7 +210,47 @@ def queue():
 @bp.route("/members")
 @login_required
 def members():
+    if is_admin():
+        return render_template('management.html')
+
     return render_template('members.html')
+
+
+@bp.route("/manage-members", methods=["POST"])
+@login_required
+def manage():
+    if is_admin():
+        # Get results from request form
+        results = request.form
+        result = {}
+        
+        email = results.get('email')
+        if not is_empty_field(email):
+            result['add'] = {'name': results.get('name'),
+                             'email': email}
+        
+        active = results.get('active')
+        if not is_empty_field(active):
+            result['activate'] = active
+        
+        deactive = results.get('deactive')
+        if not is_empty_field(deactive):
+            result['deactivate'] = deactive
+        
+        admin = results.get('admin')
+        if not is_empty_field(admin):
+            result['admin'] = admin
+        
+        deadmin = results.get('deadmin')
+        if not is_empty_field(deadmin):
+            result['remove_admin'] = deadmin
+        
+        if len(result) == 0:
+            result['Submission'] = 'Nothing'
+        
+        return json.dumps(result)
+
+    return redirect(url_for("index"))
 
 
 @bp.route("/success", methods=["POST"])
@@ -348,11 +388,25 @@ def get_remaining_time(print_job):
 def is_active_worker():
     worker = Workers.query.filter_by(email=current_user.email).first()
 
+    # If the worker exists
     if worker is not None:
         return worker.is_Active
     
     return False
 
+
+def is_admin():
+    worker = Workers.query.filter_by(email=current_user.email).first()
+
+    # If the worker exists
+    if worker is not None:
+        return worker.is_Admin
+    
+    return False
+    
+
+def is_empty_field(field):
+    return field == ''
 
 if __name__ == "__main__":
     # Run HTTPS
