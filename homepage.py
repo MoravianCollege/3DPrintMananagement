@@ -190,14 +190,15 @@ def printer_status():
         Gutenberg_finish = ""
  
     Xerox_status, Gutenberg_status = get_status_string(Xerox_status, Gutenberg_status)
-    
+
     return render_template('status.html',
                            X_status=Xerox_status,
                            G_status=Gutenberg_status,
                            X_name=Xerox_name,
                            G_name=Gutenberg_name,
                            X_finish=Xerox_finish,
-                           G_finish=Gutenberg_finish)
+                           G_finish=Gutenberg_finish,
+                           access='a')
 
 
 @bp.route("/queue")
@@ -235,36 +236,49 @@ def failure():
 @bp.route("/pause-printer/Xerox", methods=["GET"])
 @login_required
 def pause_xerox():
-    Xerox = PrintJob(Ultimaker("172.31.228.191", None, None))
-    Xerox.pause()
-    
-    return jsonify({'success': 'true'})
+    if is_active_worker:
+        Xerox = PrintJob(Ultimaker("172.31.228.191", None, None))
+        Xerox.pause()
+
+        return jsonify({'success': 'true'})
+
+    return jsonify({'success': 'false'})
+
 
 @bp.route("/pause-printer/Gutenberg", methods=["GET"])
 @login_required
 def pause_gutenberg():
-    Gutenberg = PrintJob(Ultimaker("172.31.228.190", None, None))
-    Gutenberg.pause()
+    if is_active_worker:
+        Gutenberg = PrintJob(Ultimaker("172.31.228.190", None, None))
+        Gutenberg.pause()
 
-    return jsonify({'success': 'true'})
+        return jsonify({'success': 'true'})
+
+    return jsonify({'success': 'false'})
 
 
 @bp.route("/resume-printer/Xerox", methods=["GET"])
 @login_required
 def resume_xerox():
-    Xerox = PrintJob(Ultimaker("172.31.228.191", None, None))
-    Xerox.resume()
-    
-    return jsonify({'success': 'true'})
+    if is_active_worker:
+        Xerox = PrintJob(Ultimaker("172.31.228.191", None, None))
+        Xerox.resume()
+        
+        return jsonify({'success': 'true'})
+
+    return jsonify({'success': 'false'})
 
 
 @bp.route("/resume-printer/Gutenberg", methods=["GET"])
 @login_required
 def resume_gutenberg():
-    Gutenberg = PrintJob(Ultimaker("172.31.228.190", None, None))
-    Gutenberg.resume()
+    if is_active_worker:
+        Gutenberg = PrintJob(Ultimaker("172.31.228.190", None, None))
+        Gutenberg.resume()
 
-    return jsonify({'success': 'true'})
+        return jsonify({'success': 'true'})
+
+    return jsonify({'success': 'false'})
 
 
 def get_google_provider_cfg():
@@ -329,6 +343,15 @@ def get_status_message(status):
 def get_remaining_time(print_job):
     return ("Remaining time for print: " +
             str(print_job.time_total - print_job.time_elapsed))
+
+
+def is_active_worker():
+    worker = Workers.query.filter_by(email=current_user.email).first()
+
+    if worker is not None:
+        return worker.is_Active
+    
+    return False
 
 
 if __name__ == "__main__":
