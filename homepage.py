@@ -221,7 +221,7 @@ def success():
     
     # Check if the user actually included a print
     if not request_has_printjob(results):   
-        return redirect(url_for("failure"))
+        return redirect("/error-no-print-attached")
 
     # Print was given
     return render_template('success.html')
