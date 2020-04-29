@@ -23,7 +23,6 @@
                             {{ X_name }}<br>
                             {{ X_finish }}
                         </p>
-                        <p style="display: none;" id="X_status">{{ X_status }}</p>
                         <div style="text-align: center;">
                             <button id="pauseX" style="display: none;">Pause</button>
                             <button id="resumeX" style="display: none;">Resume</button>
@@ -38,7 +37,6 @@
                             {{ G_name }}<br>
                             {{ G_finish }}
                         </p>
-                        <p style="display: none;" id="G_status">{{ G_status }}</p>
                         <div style="text-align: center;">
                             <button id="pauseG" style="display: none;">Pause</button>
                             <button id="resumeG" style="display: none;">Resume</button>
@@ -47,6 +45,10 @@
                 </div>
             </div>
           </div>
+          <p style="display: none;" id="X_status">{{ X_status }}</p>
+          <p style="display: none;" id="G_status">{{ G_status }}</p>
+          <p style="display: none;" id="access">{{ access }}</p>
+          
     </body>
     <script type=text/javascript> $(function() { $("#pauseG").click(function (event) { $.getJSON('/pause-printer/Gutenberg', { },
         function(data) { }); return false; }); }); </script>
@@ -60,22 +62,26 @@
         function setButtons() {
             var G_status = document.getElementById("G_status");
             var X_status = document.getElementById("X_status");
+            var access = document.getElementById("access");
             
-            if ("PRINTING" === G_status.innerText) {
-                var gutenButton = document.getElementById("pauseG");
-                gutenButton.style.display = 'block'
-                
-            } else if ("PAUSED" === G_status.innerText) {
-                var gutenButton = document.getElementById("resumeG");
-                gutenButton.style.display = 'block'
-            }
+            if (access.innerText == "True") {
+            
+                if ("PRINTING" === G_status.innerText) {
+                    var gutenButton = document.getElementById("pauseG");
+                    gutenButton.style.display = 'block'
+                    
+                } else if ("PAUSED" === G_status.innerText) {
+                    var gutenButton = document.getElementById("resumeG");
+                    gutenButton.style.display = 'block'
+                }
 
-            if ("PRINTING" === X_status.innerText) {
-                var xeroxButton = document.getElementById("pauseX");
-                xeroxButton.style.display = 'block'
-            } else if ("PAUSED" === X_status.innerText) {
-                var xeroxButton = document.getElementById("resumeX");
-                xeroxButton.style.display = 'block';
+                if ("PRINTING" === X_status.innerText) {
+                    var xeroxButton = document.getElementById("pauseX");
+                    xeroxButton.style.display = 'block'
+                } else if ("PAUSED" === X_status.innerText) {
+                    var xeroxButton = document.getElementById("resumeX");
+                    xeroxButton.style.display = 'block';
+                }
             }
         }
     </script>

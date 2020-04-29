@@ -204,17 +204,12 @@ def printer_status():
 @bp.route("/queue")
 @login_required
 def queue():
-    worker = Workers(name=current_user.name, email=current_user.email, is_Admin=True, is_Active=True)
-    db.session.add(worker)
-    db.session.commit()
     return render_template('queue.html')
 
 
 @bp.route("/members")
 @login_required
 def members():
-    db.session.delete(Workers.query.filter_by(email=current_user.email).first())
-    db.session.commit()
     return render_template('members.html')
 
 
