@@ -21,7 +21,7 @@ from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
 
 # Internal imports
-from .DBTableCreation import Users, Workers
+from .DBTableCreation import Users, Workers, Project, Print
 from . import db, login_manager
 from .ultimaker import Ultimaker, PrintJob, PrintJobState, PrintJobResult
 
@@ -234,8 +234,7 @@ def manage():
         email = results.get('email')
         if not is_empty_field(email):
             worker = Workers.query.filter_by(email=email).first()
-            print(email)
-            print(worker is None)
+
             if worker is None:
                 result['add'] = {'name': results.get('name'),
                                 'email': email}
@@ -311,6 +310,14 @@ def success():
     # Check if the user actually included a print
     if not request_has_printjob(results):   
         return redirect("/error-no-print-attached")
+    
+    ## Put results into databases
+    #  link files duedate color1 color2 material detail name email
+    project = Project(name=current_user.name, description=results.get('detail'), general_Link=results.get('link'), for_Who=current_user.email, deadline=results.get('duedate'), status='', primary_Person='')
+    print_info = Print(name=current_user.name, base_Settings='', core1=results.get('color1'), core2=results.get('color2'), material1=results.get('material'), material2=results.get('material'), est_Time='', est_Material='')
+    db.session.add(project)
+    db.session.add(print_info)
+    db.session.commit()
 
     # Print was given
     return render_template('success.html')
