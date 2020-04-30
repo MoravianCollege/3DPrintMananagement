@@ -38,7 +38,7 @@ class Project(db.Model):
     description = db.Column(db.String(500), unique=False, nullable=False)
     general_Link = db.Column(db.String(500), unique=False, nullable=False)
     for_Who = db.Column(db.String(100), unique=False, nullable=False)
-    deadline = db.Column(db.DateTime, unique=False, nullable=True)
+    deadline = db.Column(db.String(80), unique=False, nullable=True)
     status = db.Column(db.String(50), unique=False, nullable=False)
     primary_Person = db.Column(db.String(80), unique=True, nullable=False) 
 
