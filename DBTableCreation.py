@@ -1,9 +1,6 @@
 import flask_login
 from . import db
 
-
-
-
 class Users(db.Model, flask_login.UserMixin):
 
     id = db.Column(db.Integer, primary_key=True)
@@ -46,7 +43,7 @@ class Model(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     project_ID= db.Column(db.Integer, unique=False) # reference project Id
-    status = db.Column(db.String(50), unique=False, nullable=False) # ref project status
+    status = db.Column(db.String(50), unique=False, nullable=False) 
     count_Needed = db.Column(db.Integer, unique=False, nullable=False)
     
     def __repr__(self):
