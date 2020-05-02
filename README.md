@@ -6,6 +6,9 @@
     * Must contain the client id and client secret (see section Google Oauth Keys):
         * `GOOGLE_CLIENT_ID=Your_Client_Id`
         * `GOOGLE_CLIENT_SECRET=Your_Client_Secret`
+* Must install necessary libraries
+    * The `requirements.txt` file contains all the libraries, some with the versions used
+    * Can run the command `pip3 install -r requirements.txt` to install everything in requirements.
 * Before the initial run command (see next section), use command `flask init-db`
     * Generates an empty database
     * Will clear any existing database if present
